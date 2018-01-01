@@ -15,7 +15,7 @@ class Particle {
   }
   
   void drawParticle() {
-    stroke(0, 5);
+    stroke(55, 5);
     strokeWeight(1);
     line(pos.x, pos.y, prevPos.x, prevPos.y);
   }

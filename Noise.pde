@@ -1,7 +1,7 @@
 class Noise {
   int repeat = -1;
   
-  int octaves = 6;
+  int octaves = 3;
   double persistence = 0.5;
   double frequency = 1;
   double zFrequency = 1; //particular use

@@ -2,7 +2,7 @@ import java.util.*;
 
 Random random = new Random();
 Noise noise = new Noise();
-Particle[] particles = new Particle[50000];
+Particle[] particles = new Particle[100000];
 
 PVector[] flowfield;
 
