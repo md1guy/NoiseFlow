@@ -1,9 +1,10 @@
 class Noise {
   int repeat = -1;
   
-  int octaves = 4;
+  int octaves = 6;
   double persistence = 0.5;
   double frequency = 1;
+  double zFrequency = 1; //particular use
   double amplitude = 1;
   double lacunarity = 2;
   
@@ -146,16 +147,18 @@ class Noise {
   double perlin(double x, double y, double z) {
     double noiseHeight = 0;
     double frequency = this.frequency;
+    double zFrequency = this.zFrequency;
     double amplitude = this.amplitude;
     double maxValue = 0;  // Used for normalizing result to 0.0 - 1.0
     
     for(int i = 0; i < octaves; i++) {
-        noiseHeight += basePerlin(x * frequency, y * frequency, z * frequency) * amplitude;
+        noiseHeight += basePerlin(x * frequency, y * frequency, z * zFrequency) * amplitude;
         
         maxValue += amplitude;
         
         amplitude *= persistence;
         frequency *= lacunarity;
+        zFrequency *= lacunarity;
     }
     
     return noiseHeight / maxValue;
