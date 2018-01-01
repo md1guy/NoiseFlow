@@ -2,9 +2,11 @@ import java.util.*;
 
 Random random = new Random();
 Noise noise = new Noise();
-Particle[] particles = new Particle[100];
+Particle[] particles = new Particle[500];
 
-int scl = 2;
+PVector[] flowfield;
+
+int scl = 15;
 int rows, cols;
 
 double xoff = 0;
@@ -18,8 +20,10 @@ float minNoiseHeight;
 void setup() {
   size(600, 600, P2D);
   
-  rows = height / scl;
-  cols = width / scl;
+  rows = height / scl + 1;
+  cols = width / scl + 1;
+  
+  flowfield = new PVector[rows * cols];
   
   for(int i = 0; i < particles.length; i++) {
     particles[i] = new Particle();
@@ -28,11 +32,6 @@ void setup() {
 
 void draw() {
   background(255);
-  
-  for(int i = 0; i < particles.length; i++) {
-    particles[i].updateSpeed();
-    particles[i].drawParticle();
-  }
   
   float[][] heightMap = getNoiseMap();
   
@@ -44,7 +43,8 @@ void draw() {
       float angle = heightMap[x][y];
       
       PVector v = PVector.fromAngle(angle * TWO_PI);
-      noFill();
+      //v.setMag(0.1);
+      flowfield[cols * y + x] = v;
       
       pushMatrix();
       
@@ -57,6 +57,13 @@ void draw() {
       
       popMatrix();
     }
+  }
+  
+  for(int i = 0; i < particles.length; i++) {
+    particles[i].checkEdges();
+    particles[i].follow(flowfield);
+    particles[i].updateSpeed();
+    particles[i].drawParticle();
   }
 }
 
@@ -76,11 +83,11 @@ float[][] getNoiseMap() {
       
       noiseMap[x][y] = noiseValue;
       
-      xoff += 0.01;
+      xoff += 0.1;
     }
     
     xoff = 0;
-    yoff += 0.01;
+    yoff += 0.1;
   }
   
   for(int y = 0; y < rows; y++) {
@@ -91,7 +98,7 @@ float[][] getNoiseMap() {
   
   xoff = 0;
   yoff = 0;
-  zoff += 0.002;
+  zoff += 0.006;
   
   return noiseMap;
 }
