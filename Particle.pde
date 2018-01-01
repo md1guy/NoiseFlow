@@ -2,18 +2,21 @@ class Particle {
   PVector pos = new PVector(random.nextFloat() * width, random.nextFloat() * height);
   PVector vel = new PVector(0, 0);
   PVector acc = new PVector(0, 0);
-  float maxSpeed = 3;
+  PVector prevPos = pos;
   
+  float maxSpeed = 5;
+    
   void updateSpeed() {
     vel.add(acc);
     vel.limit(maxSpeed);
+    prevPos = pos;
     pos.add(vel);
     acc.mult(0);
   }
   
   void drawParticle() {
-    stroke(0);
-    strokeWeight(5);
+    stroke(0, 5);
+    strokeWeight(1);
     point(pos.x, pos.y);
   }
   
