@@ -2,8 +2,9 @@ import java.util.*;
 
 Random random = new Random();
 Noise noise = new Noise();
+Particle[] particles = new Particle[100];
 
-int scl = 20;
+int scl = 2;
 int rows, cols;
 
 double xoff = 0;
@@ -19,10 +20,19 @@ void setup() {
   
   rows = height / scl;
   cols = width / scl;
+  
+  for(int i = 0; i < particles.length; i++) {
+    particles[i] = new Particle();
+  }
 }
 
 void draw() {
   background(255);
+  
+  for(int i = 0; i < particles.length; i++) {
+    particles[i].updateSpeed();
+    particles[i].drawParticle();
+  }
   
   float[][] heightMap = getNoiseMap();
   
