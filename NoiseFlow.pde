@@ -2,11 +2,11 @@ import java.util.*;
 
 Random random = new Random();
 Noise noise = new Noise();
-Particle[] particles = new Particle[100000];
+Particle[] particles = new Particle[50000];
 
 PVector[] flowfield;
 
-int scl = 16;
+int scl = 10;
 int rows, cols;
 
 double xoff = 0;
@@ -19,6 +19,7 @@ float minNoiseHeight;
 
 void setup() {
   size(1600, 900, P2D);
+  colorMode(HSB, 255);
   background(255);
   
   rows = height / scl + 1;
@@ -71,8 +72,8 @@ float[][] getNoiseMap() {
   
   for(int y = 0; y < rows; y++) {
     for(int x = 0; x < cols; x++) {
-      //noiseValue = (noise((float)xoff, (float)yoff, (float)zoff));
-      noiseValue = (float)(noise.perlin(xoff, yoff, zoff));
+      noiseValue = (noise((float)xoff, (float)yoff, (float)zoff));
+      //noiseValue = (float)(noise.perlin(xoff, yoff, zoff));
       
       if(noiseValue > maxNoiseHeight) {
         maxNoiseHeight = noiseValue;
@@ -101,4 +102,8 @@ float[][] getNoiseMap() {
   zoff += 0.001;
   
   return noiseMap;
+}
+
+void mousePressed() {
+  saveFrame("./snapshots/snapshot-####.png");
 }
