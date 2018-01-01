@@ -2,11 +2,11 @@ import java.util.*;
 
 Random random = new Random();
 Noise noise = new Noise();
-Particle[] particles = new Particle[25000];
+Particle[] particles = new Particle[10000];
 
 PVector[] flowfield;
 
-int scl = 20;
+int scl = 16;
 int rows, cols;
 
 double xoff = 0;
@@ -40,7 +40,7 @@ void draw() {
     for(int x = 0; x < cols; x++) {
       float angle = heightMap[x][y];
       
-      PVector v = PVector.fromAngle(angle * PI * 1.5);
+      PVector v = PVector.fromAngle(angle * TWO_PI);
       v.setMag(1);
       flowfield[cols * y + x] = v;
       /*
@@ -71,7 +71,7 @@ float[][] getNoiseMap() {
   
   for(int y = 0; y < rows; y++) {
     for(int x = 0; x < cols; x++) {
-      noiseValue = (float)(noise.perlin(xoff, yoff, zoff));
+      noiseValue = (float)(noise((float)xoff, (float)yoff, (float)zoff));
       
       if(noiseValue > maxNoiseHeight) {
         maxNoiseHeight = noiseValue;
@@ -97,7 +97,7 @@ float[][] getNoiseMap() {
   
   xoff = 0;
   yoff = 0;
-  zoff += 0.006;
+  zoff += 0.01;
   
   return noiseMap;
 }

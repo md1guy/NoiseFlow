@@ -2,14 +2,14 @@ class Particle {
   PVector pos = new PVector(random.nextFloat() * width, random.nextFloat() * height);
   PVector vel = new PVector(0, 0);
   PVector acc = new PVector(0, 0);
-  PVector prevPos = pos;
+  PVector prevPos = pos.copy();
   
-  float maxSpeed = 5;
+  float maxSpeed = 2;
     
   void updateSpeed() {
     vel.add(acc);
     vel.limit(maxSpeed);
-    prevPos = pos;
+    prevPos = pos.copy();
     pos.add(vel);
     acc.mult(0);
   }
@@ -17,7 +17,7 @@ class Particle {
   void drawParticle() {
     stroke(0, 5);
     strokeWeight(1);
-    point(pos.x, pos.y);
+    line(pos.x, pos.y, prevPos.x, prevPos.y);
   }
   
   void follow(PVector[] flowfield) {
