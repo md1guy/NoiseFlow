@@ -3,7 +3,7 @@ class Noise {
   
   int octaves = 3;
   double persistence = 0.5;
-  double frequency = 1;
+  double frequency = 0.5;
   double zFrequency = 1; //particular use
   double amplitude = 1;
   double lacunarity = 2;

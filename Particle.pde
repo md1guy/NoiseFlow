@@ -4,7 +4,7 @@ class Particle {
   PVector acc = new PVector(0, 0);
   PVector prevPos = pos.copy();
   
-  int colour;
+  int colour = 25;
   
   float maxSpeed = 2;
     
@@ -17,9 +17,13 @@ class Particle {
   }
   
   void drawParticle() {
-    stroke(colour, 255, 255, 5);
+    /*
+    stroke(colour, 255, 255, 3);
     colour += 1;
     if(colour > 255) colour = 0;
+    */
+    colorMode(RGB);
+    stroke(0, 5);
     strokeWeight(1);
     line(pos.x, pos.y, prevPos.x, prevPos.y);
   }
